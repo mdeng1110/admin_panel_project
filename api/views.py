@@ -24,6 +24,7 @@ def instructor_describe(request, pk):
 
 @api_view(['POST'])
 def instructor_add(request):
+    print(request.__dict__)
     payload = JSONParser().parse(request)
     serializer = InstructorSerializer(data=payload)
     if serializer.is_valid():
