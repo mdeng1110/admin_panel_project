@@ -4,6 +4,6 @@ from app import views
 
 urlpatterns = [
     path('', views.WelcomeView.as_view(), name="home"),
-    path('student-onboarding/', views.StudentOnboardingView.as_view(), name="student-onboarding"),
-    path('instructor-onboarding/', views.InstructorOnboardingView.as_view(), name="instructor-onboarding")
+    path('signup/', views.SignupView.as_view(), name="signup"),
+    path('login/', views.LoginView.as_view(), name="login"),
 ]

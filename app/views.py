@@ -1,33 +1,36 @@
+import json
 import requests
+from django.contrib.auth.hashers import make_password
 from django.shortcuts import render
 from django.views.generic import TemplateView, FormView
 from django.http import HttpResponseRedirect
-from .forms import StudentForm
+from .forms import SignupForm, LoginForm
 # Create your views here.
 class WelcomeView(TemplateView):
     template_name = "home.html"
 
-class StudentView(TemplateView):
-    template_name = "students.html"
-
 class InstructorView(TemplateView):
     template_name = "instructors.html"
 
-class StudentOnboardingView(FormView):
-    template_name = "student_onboarding.html"
-    form_class = StudentForm
+class LoginView(TemplateView):
+    template_name = "login.html"
+    form_class = LoginForm
+
+class SignupView(FormView):
+    template_name = "signup.html"
+    form_class = SignupForm
     success_url = "/app/"
     def form_valid(self, form):
         print("something")
         url = "http://localhost:8000/api/instructors/add"
-        # form = StudentForm()
-        payload = {
+        password = make_password(form.cleaned_data["password"])
+        payload = json.dumps({
+            "username": form.cleaned_data["username"],
+            "password": form.cleaned_data["password"],
             "name": form.cleaned_data["name"],
             "email": form.cleaned_data["email"]
-        }
+        })
         response = requests.post(url, data=payload)
         print(response.text)
         return super().form_valid(form)
         # return render(request, 'student_onboarding.html', {'form': form})
-class InstructorOnboardingView(TemplateView):
-    template_name = "instructor_onboarding.html"

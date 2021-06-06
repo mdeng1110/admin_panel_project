@@ -5,6 +5,8 @@ from django.db import models
 class Instructor(models.Model):
     name = models.CharField("Name", max_length=240)
     email = models.EmailField()
+    username = models.CharField(max_length=100)
+    password = models.CharField(max_length=100)
     created = models.DateField(auto_now_add=True)
     enabled = models.BooleanField(default=True)
 
