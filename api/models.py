@@ -1,9 +1,12 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
 class Instructor(models.Model):
-    name = models.CharField("Name", max_length=240)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    first_name = models.CharField("First Name", max_length=240)
+    last_name = models.CharField("Last Name", max_length=240)
     email = models.EmailField()
     username = models.CharField(max_length=100)
     password = models.CharField(max_length=100)

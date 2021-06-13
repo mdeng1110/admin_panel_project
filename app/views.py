@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.views.generic import TemplateView, FormView
 from django.http import HttpResponseRedirect
 from .forms import SignupForm, LoginForm
+from django.contrib.auth.models import User
 # Create your views here.
 class WelcomeView(TemplateView):
     template_name = "home.html"
@@ -21,13 +22,17 @@ class SignupView(FormView):
     form_class = SignupForm
     success_url = "/app/"
     def form_valid(self, form):
-        print("something")
+        user = User.objects.create_user(form.cleaned_data["username"], 
+                                        form.cleaned_data["email"], 
+                                        form.cleaned_data["password1"])
+        user.save()
         url = "http://localhost:8000/api/instructors/add"
-        password = make_password(form.cleaned_data["password"])
         payload = json.dumps({
+            "user": user.id,
             "username": form.cleaned_data["username"],
-            "password": form.cleaned_data["password"],
-            "name": form.cleaned_data["name"],
+            "password": form.cleaned_data["password1"],
+            "first_name": form.cleaned_data["first_name"],
+            "last_name": form.cleaned_data["last_name"],
             "email": form.cleaned_data["email"]
         })
         response = requests.post(url, data=payload)

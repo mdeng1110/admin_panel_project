@@ -5,7 +5,7 @@ class InstructorSerializer(serializers.ModelSerializer):
     courses = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
     class Meta:
         model = Instructor 
-        fields = ['pk', 'name', 'email', 'courses', 'created', 'enabled']
+        fields = ['pk', 'username', 'first_name', 'last_name', 'email', 'courses', 'created', 'enabled']
 
 class CourseSerializer(serializers.ModelSerializer):
     class Meta:

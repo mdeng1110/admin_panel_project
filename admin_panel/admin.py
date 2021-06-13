@@ -8,7 +8,7 @@ class CourseAdmin(admin.ModelAdmin):
 
 @admin.register(Instructor)
 class InstructorAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'name', 'email', 'enabled')
+    list_display = ('pk', 'first_name', 'last_name', 'email', 'enabled')
 
 # Register your models here.
 
